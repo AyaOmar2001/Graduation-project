@@ -1,0 +1,11 @@
+controller_manager:
+  use_controller_manager: true
+
+ros_controllers:
+  # Load joint state controller
+  - joint_state_controller
+  # Load joint position controllers
+  - front_left_wheel_position_controller
+  - front_right_wheel_position_controller
+  - rear_left_wheel_position_controller
+  - rear_right_wheel_position_controller

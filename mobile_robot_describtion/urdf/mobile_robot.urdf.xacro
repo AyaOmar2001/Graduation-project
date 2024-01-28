@@ -1,0 +1,294 @@
+<?xml version="1.0" ?> 
+<robot name="mobile_robot " xmlns:xacro="https://www.ros.org/wiki/xacro" >  
+ <!--   Links and joints of robot  -->
+  <xacro:include filename="$(find mobile_robot_describtion)/urdf/mobile_robot.gazebo.xacro">
+
+<link name="base_footprint">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </link>
+
+  <joint name="footprint_to_base" type="fixed">
+   <origin rpy="0 0 0" xyz="0 0 0.1"/>
+    <parent link="base_footprint"/>
+    <child link="link_chassis"/>
+  </joint>
+
+ <link name="link_chassis">
+  <pose>0 0 0.1 0 0 0</pose>      
+  <inertial>      
+    <mass value="10"/>      
+    <origin rpy="0 0 0" xyz="0 0 0.1"/>      
+    <inertia ixx="0.0395416666667" ixy="0" ixz="0"     iyy="0.106208333333" iyz="0" izz="0.106208333333"/>    
+  </inertial>
+        
+  <collision name="collision_chassis">      
+    <geometry>        
+      <box size="0.5 0.3 0.07"/>      
+    </geometry>    
+  </collision>
+        
+  <visual>      
+   <origin rpy="0 0 0" xyz="0 0 0"/>      
+   <geometry>
+        <mesh
+          filename="package://mobile_robot_describtion/meshes/base_link.STL" />
+      </geometry>
+  </visual>        
+</link>
+
+<link name="link_F_right_wheel">        
+  <inertial>      
+    <mass value="0.2"/>      
+   <origin xyz="0.28 -0.25 0" rpy="0 0 3.1415" />
+    <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>    
+  </inertial>
+        
+  <collision name="link_F_right_wheel_collision">      
+     <origin xyz="0.28 -0.25 0" rpy="0 0 3.1415" />  
+    <geometry>        
+     <mesh filename="package://mobile_robot_describtion/meshes/FLlink.STL" />     
+    </geometry>    
+  </collision> 
+       
+  <visual name="link_F_right_wheel_visual">      
+   <origin xyz="0.28 -0.25 0" rpy="0 0 3.1415" />    
+    <geometry>        
+       <mesh filename="package://mobile_robot_describtion/meshes/FLlink.STL" />     
+    </geometry>         
+  </visual>      
+</link>
+
+<joint name="joint_F_right_wheel" type="continuous">    
+  <origin rpy="0 0 0" xyz="-0.05 0.15 0"/>    
+  <child link="link_F_right_wheel" />    
+  <parent link="link_chassis"/>    
+  <axis rpy="0 0 0" xyz="0 1 0"/>    
+  <limit effort="100" velocity="10"/>    
+  <joint_properties damping="1.0" friction="1.0" />  
+</joint>
+
+<link name="link_B_right_wheel">        
+  <inertial>      
+    <mass value="0.2"/>      
+      <origin xyz="-0.28 -0.25 0" rpy="0 0 3.1415" />    
+    <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>    
+  </inertial>
+        
+  <collision name="link_B_right_wheel_collision">      
+    <origin xyz="-0.28 -0.25 0" rpy="0 0 3.1415" />      
+    <geometry>        
+      <cylinder length="0.04" radius="0.1"/>      
+    </geometry>    
+  </collision> 
+       
+  <visual name="link_B_right_wheel_visual">      
+    <origin xyz="-0.28 -0.25 0" rpy="0 0 3.1415" />      
+    <geometry>        
+        <mesh filename="package://mobile_robot_describtion/meshes/FLlink.STL" /> 
+    </geometry>         
+  </visual>      
+</link>
+
+<joint name="joint_B_right_wheel" type="continuous">    
+  <origin rpy="0 0 0" xyz="-0.05 0.15 0"/>    
+  <child link="link_B_right_wheel" />    
+  <parent link="link_chassis"/>    
+  <axis rpy="0 0 0" xyz="0 1 0"/>    
+  <limit effort="10000" velocity="1000"/>    
+  <joint_properties damping="1.0" friction="1.0" />  
+</joint>
+
+<link name="link_B_left_wheel">        
+  <inertial>      
+    <mass value="0.2"/>      
+   <origin xyz="-0.28 0.25 0" rpy="0 0 0" />   
+    <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>    
+  </inertial>
+        
+  <collision name="link_B_left_wheel_collision">      
+    <origin xyz="-0.28 0.25 0" rpy="0 0 0" />   
+    <geometry>        
+      <cylinder length="0.04" radius="0.1"/>      
+    </geometry>    
+  </collision> 
+       
+  <visual name="link_B_left_wheel_visual">      
+    <origin xyz="-0.28 0.25 0" rpy="0 0 0" />     
+    <geometry>        
+       <mesh filename="package://mobile_robot_describtion/meshes/FLlink.STL" /> 
+    </geometry>         
+  </visual>      
+</link>
+
+<joint name="joint_B_left_wheel" type="continuous">    
+  <origin rpy="0 0 0" xyz="-0.05 0.15 0"/>    
+  <child link="link_B_left_wheel" />    
+  <parent link="link_chassis"/>    
+  <axis rpy="0 0 0" xyz="0 1 0"/>    
+  <limit effort="100" velocity="100"/>    
+  <joint_properties damping="1.0" friction="1.0" />  
+</joint>
+
+<link name="link_F_left_wheel">        
+  <inertial>      
+    <mass value="0.2"/>      
+   <origin xyz="0.28 0.25 0" rpy="0 0 0" />      
+    <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>    
+  </inertial>
+        
+  <collision name="link_F_left_collision">      
+    <origin xyz="0.28 0.25 0" rpy="0 0 0" />    
+    <geometry>        
+      <cylinder length="0.04" radius="0.1"/>      
+    </geometry>    
+  </collision> 
+       
+  <visual name="link_F_left_visual">      
+    <origin xyz="0.28 0.25 0" rpy="0 0 0" />   
+    <geometry>        
+       <mesh filename="package://mobile_robot_describtion/meshes/FLlink.STL" />
+    </geometry>         
+  </visual>      
+</link>
+
+<joint name="joint_F_left_wheel" type="continuous">    
+  <origin rpy="0 0 0" xyz="-0.05 0.15 0"/>    
+  <child link="link_F_left_wheel" />    
+  <parent link="link_chassis"/>    
+  <axis rpy="0 0 0" xyz="0 1 0"/>    
+  <limit effort="100" velocity="100"/>    
+  <joint_properties damping="1.0" friction="1.0" />  
+</joint>
+
+<transmission name="F_right_wheel_transmission">
+  <type>transmission_interface/SimpleTransmission</type>
+    
+  <joint name="joint_F_right_wheel">
+    <hardwareInterface>
+      hardware_interface/VelocityJointInterface
+    </hardwareInterface>      
+  </joint> 
+   
+  <actuator name="F_right_wheel_actuator">        
+    <mechanicalReduction>1</mechanicalReduction>    
+    <hardwareInterface>
+      VelocityJointInterface
+    </hardwareInterface>   
+  </actuator> 
+</transmission>
+
+<transmission name="B_right_wheel_transmission">
+  <type>transmission_interface/SimpleTransmission</type>
+    
+  <joint name="joint_B_right_wheel">
+    <hardwareInterface>
+      hardware_interface/VelocityJointInterface
+    </hardwareInterface>      
+  </joint> 
+   
+  <actuator name="B_right_wheel_actuator">        
+    <mechanicalReduction>1</mechanicalReduction>    
+    <hardwareInterface>
+      VelocityJointInterface
+    </hardwareInterface>   
+  </actuator> 
+ 
+</transmission>
+
+<transmission name="F_left_wheel_transmission">
+  <type>transmission_interface/SimpleTransmission</type>
+    
+  <joint name="joint_F_left_wheel">
+    <hardwareInterface>
+      hardware_interface/VelocityJointInterface
+    </hardwareInterface>      
+  </joint> 
+   
+  <actuator name="F_left_wheel_actuator">        
+    <mechanicalReduction>1</mechanicalReduction>    
+    <hardwareInterface>
+      VelocityJointInterface
+    </hardwareInterface>   
+  </actuator> 
+ 
+</transmission>
+
+<transmission name="B_left_wheel_transmission">
+  <type>transmission_interface/SimpleTransmission</type>
+    
+  <joint name="joint_B_left_wheel">
+    <hardwareInterface>
+      hardware_interface/VelocityJointInterface
+    </hardwareInterface>      
+  </joint> 
+   
+  <actuator name="B_left_wheel_actuator">        
+    <mechanicalReduction>1</mechanicalReduction>    
+    <hardwareInterface>
+      VelocityJointInterface
+    </hardwareInterface>   
+  </actuator> 
+ 
+</transmission>
+
+
+<link name="Camera">
+    <inertial>
+      <origin xyz="0.00111199098943748 2.78348667868134E-05 0.0125996884110157" rpy="0 0 0" />
+      <mass value="1.26688353536978" />
+      <inertia
+        ixx="0.000114531279249736"
+        ixy="4.05579542497447E-08"
+        ixz="-1.13413795064262E-05"
+        iyy="0.000771597084162044"
+        iyz="2.05555091754155E-07"
+        izz="0.000763733375600652" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mobile_robot_describtion/meshes/Camera.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mobile_robot_describtion/meshes/Camera.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="CameraJoint" type="fixed">
+    <origin xyz="0.1503 -1.2739 1.8784" rpy="0 0 0" />
+    <parent
+      link="link_chassis" />
+    <child
+      link="Camera" />
+    <axis
+      xyz="0 0 0" />
+  </joint> 
+
+<link name="camera_link_optical">
+  </link>
+
+  <joint name="Camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.5707 0 -1.5707"/>
+    <parent link="Camera"/>
+    <child link="camera_link_optical"/>
+  </joint>
+
+  
+
+</robot>

@@ -1,0 +1,32 @@
+controller_list:
+  - name: front_left_wheel_position_controller
+    type: effort_controllers/JointPositionController
+    joint: joint_F_left_wheel
+    pid:
+      p: 100.0
+      i: 0.01
+      d: 10.0
+
+  - name: front_right_wheel_position_controller
+    type: effort_controllers/JointPositionController
+    joint: joint_F_right_wheel
+    pid:
+      p: 100.0
+      i: 0.01
+      d: 10.0
+
+  - name: rear_left_wheel_position_controller
+    type: effort_controllers/JointPositionController
+    joint: joint_B_left_wheel
+    pid:
+      p: 100.0
+      i: 0.01
+      d: 10.0
+
+  - name: rear_right_wheel_position_controller
+    type: effort_controllers/JointPositionController
+    joint: joint_B_right_wheel
+    pid:
+      p: 100.0
+      i: 0.01
+      d: 10.0

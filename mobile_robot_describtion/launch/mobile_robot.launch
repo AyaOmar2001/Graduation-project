@@ -1,0 +1,30 @@
+<launch>
+  <!-- Start the Gazebo simulation with your robot model-->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  </include>
+
+  <!-- Load the URDF and spawn the robot in Gazebo -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find mobile_robot_describtion)/urdf/mobile_robot.urdf.xacro"/>
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -param robot_description -model mobile_robot"/>
+
+  <!-- Load joint controller configuration from YAML file to parameter server -->
+  <rosparam file="$(find mobile_robot_describtion)/config/controller_joint_state.yaml" command="load"/>
+  <rosparam file="$(find mobile_robot_describtion)/config/controller.yaml" command="load"/>
+
+  <!-- Start the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" args="joint_state_controller front_left_wheel_position_controller front_right_wheel_position_controller rear_left_wheel_position_controller rear_right_wheel_position_controller"/>
+
+  <!-- Convert joint states to TF transforms for rviz -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+
+  <!-- Open rviz -->
+  <node name="rviz" pkg="rviz" type="rviz"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find mobile_robot_description)/urdf/test_d435i_camera.urdf.xacro' use_nominal_extrinsics:=true" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <arg name="gui" default="True" />
+    <param name="use_gui" value="$(arg gui)" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mobile_robot_description)/rviz/urdf.rviz" required="true" />
+</launch>
